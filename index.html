@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>calculateur dépenses</title>
+  </head>
+  <style>
+    .high {
+      color: salmon;
+    }
+
+    .low {
+      color: teal;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .pagetitle {
+      color: #557174;
+    }
+  </style>
+  <script>
+    submitForm = () => {
+      let r = 0.5;
+      const R1 = parseInt(document.getElementById("R1").value);
+      const R2 = parseInt(document.getElementById("R2").value);
+      const D = parseInt(document.getElementById("D").value);
+      const i = parseFloat(document.getElementById("i").value);
+
+      const totalRevenu = R1 + R2;
+      const R_high = Math.max(R1, R2);
+      const R_low = Math.min(R1, R2);
+
+      const results = document.getElementById('results');
+
+      if ((R_high / R_low) <= 1.2) {
+        console.log("hello");
+        r = R_high / totalRevenu;
+      } else {
+        r = (R_high - (i) * (R_low - D)) / (D * (1 + i));
+      }
+
+      r = Math.round(r * 100)
+
+
+
+      document.getElementById('ratio_high').innerHTML = r;
+      document.getElementById('ratio_low').innerHTML = 100 - r;
+
+      document.getElementById('D_high').innerHTML = Math.round((r / 100) * D);
+      document.getElementById('D_low').innerHTML = Math.round((1 - (r / 100)) * D);
+
+      results.style.display = "block";
+    }
+
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" integrity="sha512-xiunq9hpKsIcz42zt0o2vCo34xV0j6Ny8hgEylN3XBglZDtTZ2nwnqF/Z/TTCc18sGdvCjbFInNd++6q3J0N6g==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" />
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="column column-80 column-offset-10">
+          <h1 class="center pagetitle">Calculatrice de dépenses communes</h1>
+          <form onsubmit="return false">
+            <fieldset>
+              <label for="R1">Salaire mensuel net 1</label>
+              <input type="number" id="R1" name="R1" value=1750>
+
+              <label for="R2">Salaire mensuel net 2</label>
+              <input type="number" id="R2" name="R2" value=2300>
+
+              <label for="D">Dépenses communes mensuelles</label>
+              <input type="number" id="D" name="D" value=2000>
+
+              <label for="i">Ratio d'inégalité maximal total ex-post</label>
+              <input type="number" id="i" name="i" min=1 max=5 step=0.01 value=1.2>
+
+              <input class="button-primary" type="submit" value="Calculer" onclick="submitForm();">
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+      <div class="row" id="results" style="display:none;" >
+        <div class="column column-80 column-offset-10">
+          <h2>Répartition</h2>
+          <h1 class="center"><span id="ratio_high" class="high"></span>% / <span id="ratio_low" class="low"></span>%</h1>
+
+          <h2>Dépenses à effectuer</h2>
+          <h1 class="center"><span id="D_high" class="high"></span>&#8364 + <span id="D_low" class="low"></span>&#8364</h1>
+
+        </div>
+      </div>
+
+    </div>
+
+  </body>
+
+</html>
