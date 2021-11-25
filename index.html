@@ -35,8 +35,7 @@
 
       const results = document.getElementById('results');
 
-      if ((R_high / R_low) <= 1.2) {
-        console.log("hello");
+      if ((R_high / R_low) <= i) {
         r = R_high / totalRevenu;
       } else {
         r = (R_high - (i) * (R_low - D)) / (D * (1 + i));
