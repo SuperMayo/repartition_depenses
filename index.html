@@ -41,15 +41,21 @@
         r = (R_high - (i) * (R_low - D)) / (D * (1 + i));
       }
 
-      r = Math.round(r * 100)
+      r_round = Math.round(r * 100)
+      
+      const D_high = Math.round((r / 100) * D);
+      const D_low = Math.round((1 - (r / 100)) * D)
 
 
 
-      document.getElementById('ratio_high').innerHTML = r;
-      document.getElementById('ratio_low').innerHTML = 100 - r;
+      document.getElementById('ratio_high').innerHTML = r_round;
+      document.getElementById('ratio_low').innerHTML = 100 - r_round;
 
-      document.getElementById('D_high').innerHTML = Math.round((r / 100) * D);
-      document.getElementById('D_low').innerHTML = Math.round((1 - (r / 100)) * D);
+      document.getElementById('D_high').innerHTML = D_high;
+      document.getElementById('D_low').innerHTML = D_low;
+      
+      document.getElementById('R1_post').innerHTML = R_high - D_high ;
+      document.getElementById('R2_post').innerHTML = R_low - D_low ;
 
       results.style.display = "block";
     }
@@ -90,6 +96,9 @@
 
           <h2>Dépenses à effectuer</h2>
           <h1 class="center"><span id="D_high" class="high"></span>&#8364 + <span id="D_low" class="low"></span>&#8364</h1>
+          
+          <h2>Revenu après dépenses</h2>
+          <h1 class="center"><span id="R1_post" class="high"></span>&#8364 + <span id="R2_post" class="low"></span>&#8364</h1>
 
         </div>
       </div>
